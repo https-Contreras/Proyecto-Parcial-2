@@ -1,0 +1,337 @@
+:root {
+    /* Paleta de Colores - Inspirado en degradados vibrantes y tonos oscuros (DigitalHouse/certificates.dev) */
+    --color-primary: #8e2de2; /* Morado Vibrante */
+    --color-secondary: #4a00e0; /* Púrpura Oscuro */
+    --color-accent: #ff007f; /* Magenta/Rosa Neón para acentos */
+    --color-text-dark: #2c3e50; /* Gris Oscuro/Azul Marino para texto */
+    --color-text-light: #ecf0f1; /* Blanco Roto para texto en fondos oscuros */
+    --color-background: #ffffff;
+    --color-card-bg: #f5f6fa; /* Fondo ligero para tarjetas */
+    --color-success: #2ecc71; /* Verde para éxito (aprobado, enviado) */
+    --color-warning: #f39c12; /* Naranja para warnings/disponible en */
+
+    /* Fuentes */
+    --font-heading: 'Roboto', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+}
+
+/* Importa fuentes si no están disponibles localmente */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Open+Sans:wght@400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+    background-color: var(--color-background);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+main {
+    padding-top: 100px; /* Espacio para el header fijo */
+}
+
+#main-header {
+    position: fixed; /* Header fijo para consistencia [cite: 281, 282] */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    
+    /* Degradado de fondo profesional */
+    background: linear-gradient(to right, var(--color-secondary), var(--color-primary));
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    /* Estilo para el logo (puedes añadir un filtro de color para que combine) */
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+#main-header h1 {
+    color: var(--color-text-light);
+    font-family: var(--font-heading);
+    font-size: 1.5em;
+    margin-right: 20px;
+}
+
+.slogan {
+    color: var(--color-text-light);
+    font-size: 0.8em;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li a {
+    color: var(--color-text-light);
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--color-accent); /* Acento vibrante al pasar el mouse */
+}
+
+/* Área de Autenticación */
+.auth-area {
+    display: flex;
+    align-items: center;
+    color: var(--color-text-light);
+    font-weight: 600;
+}
+
+#user-account-display {
+    margin-right: 15px;
+    /* Resalta la cuenta activa [cite: 288] */
+    color: var(--color-accent); 
+    text-shadow: 0 0 5px rgba(255, 0, 127, 0.7);
+}
+
+#auth-button {
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#auth-button:hover {
+    background-color: #ff3399; /* Tono más claro al hacer hover */
+    transform: scale(1.05);
+}
+
+section {
+    padding: 60px 5%;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5em;
+    color: var(--color-secondary);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.cta-button {
+    display: inline-block;
+    background: linear-gradient(to right, var(--color-accent), #ff5e3a); /* Degradado CTA */
+    color: var(--color-text-light);
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+.cta-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+/* SECCIÓN 1: Banner Principal */
+#hero-banner {
+    background: url('../images/hero-bg.jpg') no-repeat center center/cover; 
+    color: var(--color-text-light);
+    text-align: center;
+    padding: 100px 5%;
+    position: relative;
+    /* Overlay semi-transparente para mejorar lectura */
+    background-color: rgba(0, 0, 0, 0.5); 
+    background-blend-mode: multiply;
+}
+
+#hero-banner h2 {
+    color: white;
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+#hero-banner p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+/* SECCIÓN 2: Destacados/Ventajas */
+#destacados {
+    background-color: var(--color-card-bg);
+}
+
+.features-grid {
+    display: flex;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.feature-item {
+    flex: 1;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 4px solid var(--color-primary);
+}
+
+.feature-item h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+/* SECCIÓN 3: Llamada a la Acción Secundaria */
+#cta-secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-text-light);
+    text-align: center;
+}
+
+#cta-secondary h2 {
+    color: white;
+}
+
+.page-intro {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.certification-card {
+    background-color: var(--color-card-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+}
+
+.certification-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para la tarjeta habilitada */
+.certification-card.enabled {
+    border: 3px solid var(--color-primary);
+}
+
+.card-header {
+    background: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 15px;
+    text-align: center;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body ul {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.card-body ul li {
+    padding: 5px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+.card-actions {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/* Botones de acción */
+.btn-pay, .btn-start {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s;
+}
+
+.btn-pay {
+    background-color: var(--color-success);
+    color: white;
+}
+
+.btn-start {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.btn-pay:hover:not(:disabled) {
+    background-color: #27ae60;
+}
+
+.btn-start:hover:not(:disabled) {
+    background-color: #e8006e;
+}
+
+/* Estado Deshabilitado (Restricción del examen) [cite: 268] */
+.card-actions button:disabled {
+    background-color: #bdc3c7; /* Gris opaco */
+    color: #7f8c8d;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.availability-info {
+    color: var(--color-warning); /* Color de advertencia */
+    font-weight: 600;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(243, 156, 18, 0.1);
+    border-radius: 5px;
+    text-align: center;
+}
