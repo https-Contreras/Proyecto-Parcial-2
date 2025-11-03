@@ -335,3 +335,38 @@ h2 {
     border-radius: 5px;
     text-align: center;
 }
+/* Reglas Esenciales para el Modal (debe cubrir toda la pantalla y centrar el contenido) */
+.modal {
+    /* Oculto por defecto (IMPORTANTE) */
+    display: none; 
+
+    /* Fijo y ocupa toda la pantalla */
+    position: fixed; 
+    z-index: 2000; /* Asegura que esté por encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Fondo oscuro y semitransparente */
+    background-color: rgba(0, 0, 0, 0.6); 
+
+    /* PROPIEDADES CLAVE PARA EL CENTRADO */
+    /* Usar flexbox para centrar horizontal y verticalmente */
+    
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+}
+
+/* Reglas para el Contenido del Modal (la caja flotante) */
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    width: 90%; 
+    max-width: 400px; /* Tamaño máximo en escritorio */
+    position: relative;
+    /* Al usar flexbox en el .modal, ya no necesitamos la propiedad display aquí, 
+       pero se mantiene la apariencia estética. */
+}

@@ -31,7 +31,7 @@ optionsSuccessStatus: 200
 }));
 
 
-// Montar rutas bajo /api
+// Montar rutas bajo /labs
 app.use("/api", authRoutes);
 
 // (Opcional) Ruta de salud

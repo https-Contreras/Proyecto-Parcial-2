@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
+const login = require("../controllers/auth.controllers")
 
 //ruta pára el login, llama a controlador "login"
-router.get("/login", (req, res)=>{
-    return res.status(200).json({message: "funciona"});
-});
+router.post("/login",login.login);
 
 
 module.exports=router;
