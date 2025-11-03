@@ -370,3 +370,37 @@ h2 {
     /* Al usar flexbox en el .modal, ya no necesitamos la propiedad display aquí, 
        pero se mantiene la apariencia estética. */
 }
+
+.page-content {
+    flex: 1;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 4px solid var(--color-primary);
+}
+
+.page-content h2 {
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.contact-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.contact-form label {
+    font-weight: 600;
+    text-align: left;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
