@@ -4,7 +4,6 @@ const authButton = document.getElementById('auth-button');
 const userDisplay = document.getElementById('user-account-display');
 const loginForm = document.getElementById('login-form');
 
-// --- URL de la API (CORREGIDO para coincidir con el backend /api/auth) ---
 const API_BASE_URL = "http://localhost:3000/api";
 
 /** Muestra el modal de login */
@@ -17,7 +16,7 @@ function closeLoginModal() {
         modal.style.display = 'none';
 }
 
-/** Muestra alertas usando SweetAlert2 (Restricción del examen: no usar alerts nativos) */
+/** Muestra alertas usando SweetAlert2*/
 function showAlert(title, text, icon) {
     if (typeof Swal !== 'undefined') {
         Swal.fire({
@@ -51,7 +50,7 @@ function updateAuthUI() {
     }
 }
 
-/** Maneja la lógica de cerrar sesión */
+/* Maneja la lógica de cerrar sesión */
 function handleLogout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
@@ -62,7 +61,7 @@ function handleLogout() {
     showAlert("¡Adiós!", "Has cerrado la sesión con éxito.", "success");
 }
 
-/** Maneja el envío del formulario de Login */
+/* Maneja el envío del formulario de Login */
 async function handleLoginSubmit(e) {
     e.preventDefault();
     
@@ -72,7 +71,7 @@ async function handleLoginSubmit(e) {
     closeLoginModal(); 
 
     try {
-        // CORREGIDO: Usamos API_BASE_URL/login
+        
         const response = await fetch(`${API_BASE_URL}/login`, {
             method: 'POST',
             headers: {
@@ -111,7 +110,7 @@ async function handleLoginSubmit(e) {
     }
 }
 
-// --- Inicialización y Listeners ---
+// Inicialización y Listeners
 document.addEventListener('DOMContentLoaded', () => {
     updateAuthUI();
     
@@ -124,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Se asume que loginForm y el close-button SIEMPRE existen dentro del modal.
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginSubmit);
     }
