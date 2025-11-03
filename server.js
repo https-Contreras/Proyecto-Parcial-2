@@ -3,7 +3,7 @@ const authRoutes = require("./Backend/routes/auth.routes");
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const examsRoutes = require("./Backend/routes/exams.routes");
 
 // Middlewares mínimos
 app.use(express.json());
@@ -33,6 +33,9 @@ optionsSuccessStatus: 200
 
 // Montar rutas bajo /labs
 app.use("/api", authRoutes);
+
+// Rutas Protegidas (requieren token)
+app.use('/api/exams', examsRoutes);
 
 // (Opcional) Ruta de salud
 app.get("/health", (_req, res) => res.json({ ok: true }));
