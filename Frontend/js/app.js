@@ -178,42 +178,52 @@ function renderCertifications(certifications) {
   });
 }
 
-/** Crea una tarjeta individual de certificación */
 function createCertificationCard(cert) {
-  const article = document.createElement("article");
-  article.className = `certification-card ${
-    cert.activa ? "enabled" : "disabled"
-  }`;
-  article.dataset.certId = cert.id;
+    const article = document.createElement("article");
+    article.className = `certification-card ${
+        cert.activa ? "enabled" : "disabled"
+    }`;
+    article.dataset.certId = cert.id;
 
-  let availabilityText = "";
-  if (cert.activa) {
-    availabilityText =
-      '<p class="availability-info success-info">✓ Disponible Inmediatamente</p>';
-  } else if (cert.disponibleDesde) {
-    const fecha = new Date(cert.disponibleDesde);
-    const opciones = { year: "numeric", month: "long", day: "numeric" };
-    const fechaFormateada = fecha.toLocaleDateString("es-MX", opciones);
-    availabilityText = `<p class="availability-info">⏳ Disponible a partir del ${fechaFormateada}</p>`;
-  } else {
-    availabilityText = '<p class="availability-info">⏳ Próximamente</p>';
-  }
+    // --- LÓGICA DE FORMATO MÁS SENCILLA ---
+    // Simplemente reemplaza todos los saltos de línea (\n) por <br>
+    const formattedDescriptionHTML = `<p class="description">${cert.descripcion.replace(/\n/g, '<br>')}</p>`;
+    // --- FIN DE LA LÓGICA DE FORMATO ---
 
-  article.innerHTML = `
+
+    let availabilityText = "";
+    if (cert.activa) {
+        availabilityText =
+            '<p class="availability-info success-info">✓ Disponible Inmediatamente</p>';
+    } else if (cert.disponibleDesde) {
+        // Lógica de fecha simplificada (reemplaza '-' por '/' para mejor compatibilidad)
+        const fechaStr = cert.disponibleDesde.replace(/-/g, '/');
+        const fecha = new Date(fechaStr);
+        
+        const opciones = { year: "numeric", month: "long", day: "numeric", timeZone: 'UTC' };
+        const fechaFormateada = fecha.toLocaleDateString("es-MX", opciones);
+        availabilityText = `<p class="availability-info">⏳ Disponible a partir del ${fechaFormateada}</p>`;
+    } else {
+        availabilityText = '<p class="availability-info">⏳ Próximamente</p>';
+    }
+
+    article.innerHTML = `
         <div class="card-header">
             <h3>${cert.nombre}</h3>
         </div>
         <div class="card-body">
-            <p class="description">${cert.descripcion}</p>
-            <ul>
+            <!-- HTML de descripción formateado insertado aquí -->
+            ${formattedDescriptionHTML} 
+            
+            <ul class="detalles-tecnicos">
                 <li><strong class="label">Puntuación Mínima:</strong> ${
-                  cert.puntajeMinimo
+                    cert.puntajeMinimo
                 }/100</li>
                 <li><strong class="label">Tiempo de Examen:</strong> ${
-                  cert.tiempo
+                    cert.tiempo
                 } minutos</li>
                 <li><strong class="label">Costo:</strong> $${
-                  cert.costo
+                    cert.costo
                 } MXN</li>
             </ul>
             ${availabilityText}
@@ -221,7 +231,7 @@ function createCertificationCard(cert) {
         <div class="card-actions">
             <button class="btn-pay" data-cert-id="${cert.id}" ${
     !cert.activa ? "disabled" : ""
-  }>
+}>
                 Pagar Examen
             </button>
             <button class="btn-start" data-cert-id="${cert.id}" disabled>
@@ -230,19 +240,21 @@ function createCertificationCard(cert) {
         </div>
     `;
 
-  const btnPay = article.querySelector(".btn-pay");
-  const btnStart = article.querySelector(".btn-start");
+    // --- ENLACE DE EVENTOS ---
+    const btnPay = article.querySelector(".btn-pay");
+    const btnStart = article.querySelector(".btn-start");
 
-  if (btnPay && cert.activa) {
-    btnPay.addEventListener("click", () => handlePayment(cert.id));
-  }
+    if (btnPay && cert.activa) {
+        btnPay.addEventListener("click", () => handlePayment(cert.id));
+    }
 
-  if (btnStart) {
-    btnStart.addEventListener("click", () => handleStartExam(cert.id));
-  }
+    if (btnStart) {
+        btnStart.addEventListener("click", () => handleStartExam(cert.id));
+    }
 
-  return article;
+    return article;
 }
+
 
 /** Maneja el pago de una certificación */
 async function handlePayment(certId) {
