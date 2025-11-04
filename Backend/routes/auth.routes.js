@@ -1,14 +1,6 @@
 const express = require("express");
 const router = express.Router();
-<<<<<<< Updated upstream
-const login = require("../controllers/auth.controllers")
 
-//ruta pára el login, llama a controlador "login"
-router.post("/login",login.login);
-
-
-module.exports=router;
-=======
 const authController = require("../controllers/auth.controllers");
 const { authRequired } = require('../middleware/auth.middleware');
 
@@ -24,4 +16,3 @@ router.post("/exams/submit", authRequired, authController.submit);
 router.get("/exams/certificate", authRequired, authController.downloadCertificate);
 
 module.exports = router;
->>>>>>> Stashed changes
