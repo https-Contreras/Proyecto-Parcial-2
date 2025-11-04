@@ -10,7 +10,7 @@ router.get("/certifications", authController.getCertifications);
 router.post("/contacto",authController.submitFormContact );
 // ============= RUTAS PROTEGIDAS (requieren token) =============
 router.post("/logout", authRequired, authController.logout);
-router.post("/payment", authRequired, authController.payment);
+router.post("/exams/payment", authRequired, authController.payment);
 router.post("/exams/start", authRequired, authController.start);
 router.post("/exams/submit", authRequired, authController.submit);
 router.get("/exams/certificate", authRequired, authController.downloadCertificate);

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexiCode - Examen</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon"> 
+    <!-- Asegúrate de que la ruta a tu CSS sea correcta -->
+    <link rel="stylesheet" href="CSS/styles.css"> 
+    
+    <!-- SweetAlert2 (necesario para las alertas) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Logotipo de la Empresa" class="logo">
+            <h1>Nombre de la Empresa</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="certificaciones.html">Certificaciones</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+            </ul>
+        </nav>
+        <div class="auth-area">
+            <!-- Mostrar cuenta de usuario activo (controlado por auth.js) -->
+            <span id="user-account-display" style="display: none;">Hola, [Cuenta]</span>
+            <button id="auth-button">Login</button>
+        </div>
+    </header>
+
+    <main id="exam-page">
+        
+        <!-- Encabezado del Examen -->
+        <section id="exam-header" class="section-centered">
+            <h2 id="cert-title">Cargando examen...</h2>
+            <!-- Detalles del examen (puntaje, tiempo) -->
+            <div id="exam-details">
+                <p>Puntaje Mínimo Requerido: <span id="cert-score">--</span>%</p>
+                <!-- (Aportación Equipos de 4) Timer -->
+                <div id="timer-container">
+                    <strong>Tiempo Restante: <span id="timer" class="text-red-500">--:--</span></strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulario del Examen (donde se renderizan las preguntas) -->
+        <form id="exam-form" class="section-centered">
+            
+            <!-- Contenedor donde JS insertará las preguntas -->
+            <div id="questions-container">
+                <p>Generando preguntas, por favor espera...</p>
+            </div>
+
+            <!-- Botón de Envío -->
+            <button type="submit" class="cta-button">Enviar Examen</button>
+        
+        </form>
+
+    </main>
+
+    <!-- ============================================== -->
+    <!-- FOOTER: Mismo en todas las páginas -->
+    <!-- ============================================== -->
+    <footer id="main-footer">
+        <p>&copy; 2025 Nombre de la Empresa. Todos los derechos reservados.</p>
+        <div class="social-media">
+            <a href="#" target="_blank">LinkedIn</a> <!-- Actualiza tu URL de red social -->
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <!-- auth.js (o app.js) debe cargarse primero para el header y showAlert -->
+    <script src="/Frontend/js/app.js"></script> 
+</body>
+</html>
+

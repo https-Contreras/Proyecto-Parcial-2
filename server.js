@@ -35,7 +35,6 @@ optionsSuccessStatus: 200
 app.use("/api", authRoutes);
 
 // Rutas Protegidas (requieren token)
-app.use('/api/exams', authRoutes);
 //app.use("api/exams/payment",);
 // (Opcional) Ruta de salud
 app.get("/health", (_req, res) => res.json({ ok: true }));

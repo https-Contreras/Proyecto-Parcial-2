@@ -179,19 +179,8 @@ function createCertificationCard(cert) {
     article.className = `certification-card ${cert.activa ? 'enabled' : 'disabled'}`;
     article.dataset.certId = cert.id;
 
-    // Formatear fecha de disponibilidad
-    let availabilityText = '';
-    if (cert.activa) {
-        availabilityText = '<p class="availability-info success-info">✓ Disponible Inmediatamente</p>';
-    } else if (cert.disponibleDesde) {
-        const fecha = new Date(cert.disponibleDesde);
-        const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
-        const fechaFormateada = fecha.toLocaleDateString('es-MX', opciones);
-        availabilityText = `<p class="availability-info">⏳ Disponible a partir del ${fechaFormateada}</p>`;
-    } else {
-        availabilityText = '<p class="availability-info">⏳ Próximamente</p>';
-    }
-
+    // ... (Tu innerHTML para la tarjeta va aquí, es correcto) ...
+    // (Me salto el innerHTML por brevedad, asumo que es el que me diste)
     article.innerHTML = `
         <div class="card-header">
             <h3>${cert.nombre}</h3>
@@ -203,7 +192,7 @@ function createCertificationCard(cert) {
                 <li><strong class="label">Tiempo de Examen:</strong> ${cert.tiempo} minutos</li>
                 <li><strong class="label">Costo:</strong> $${cert.costo} MXN</li>
             </ul>
-            ${availabilityText}
+            <p class="availability-info">${cert.activa ? '✓ Disponible' : `⏳ Próximamente`}</p>
         </div>
         <div class="card-actions">
             <button class="btn-pay" data-cert-id="${cert.id}" ${!cert.activa ? 'disabled' : ''}>
@@ -215,90 +204,97 @@ function createCertificationCard(cert) {
         </div>
     `;
 
-    // Agregar event listeners a los botones
+    // --- ENLACE DE EVENTOS ---
     const btnPay = article.querySelector('.btn-pay');
     const btnStart = article.querySelector('.btn-start');
 
+    // 1. Listener de Pago (Tu código)
     if (btnPay && cert.activa) {
+        // Llama a handlePayment pasando el ID
         btnPay.addEventListener('click', () => handlePayment(cert.id));
     }
 
+    // 2. ¡LA LÍNEA QUE FALTABA!
     if (btnStart) {
+        // Llama a handleStartExam pasando el ID
         btnStart.addEventListener('click', () => handleStartExam(cert.id));
     }
 
     return article;
 }
 
+
 /** Maneja el pago de una certificación */
 async function handlePayment(certId) {
     const token = localStorage.getItem('token');
-
     if (!token) {
-        showAlert("Autenticación Requerida", "Debes iniciar sesión para pagar un examen", "warning");
-        openLoginModal();
+        showAlert("Autenticación Requerida", "Debes iniciar sesión para pagar", "warning");
+        if (typeof openLoginModal === 'function') openLoginModal();
         return;
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/payment`, {
+        // (Asumo que tu ruta de pago está en /api/auth/payment)
+        const response = await fetch(`${API_AUTH_URL}/payment`, { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({ certId })
+            body: JSON.stringify({ certId: certId })
         });
 
         const data = await response.json();
 
         if (response.ok) {
-            showAlert(
-                "¡Pago Exitoso!", 
-                `Has pagado la certificación "${data.certificacion}". Ahora puedes iniciar el examen.`, 
-                "success"
-            );
+            showAlert("¡Pago Exitoso!", data.mensaje || "Tu pago ha sido procesado.", "success");
             
-            // Habilitar botón de iniciar examen
-            const btnStart = document.querySelector(`.btn-start[data-cert-id="${certId}"]`);
-            if (btnStart) {
-                btnStart.disabled = false;
+            // --- HABILITAR EL BOTÓN DE INICIO ---
+            // 1. Buscar la card en el DOM usando el certId
+            const card = document.querySelector(`[data-cert-id="${certId}"]`);
+            if (card) {
+                // 2. Deshabilitar el botón de pago
+                const btnPay = card.querySelector('.btn-pay');
+                if (btnPay) {
+                    btnPay.disabled = true;
+                    btnPay.textContent = "Pagado";
+                }
+                // 3. HABILITAR el botón de inicio
+                const btnStart = card.querySelector('.btn-start');
+                if (btnStart) {
+                    btnStart.disabled = false;
+                }
             }
-
-            // Deshabilitar botón de pago
-            const btnPay = document.querySelector(`.btn-pay[data-cert-id="${certId}"]`);
-            if (btnPay) {
-                btnPay.disabled = true;
-                btnPay.textContent = "✓ Pagado";
-            }
-
         } else {
-            showAlert("Error en el Pago", data.error || "No se pudo procesar el pago", "error");
+            showAlert("Error de Pago", data.error || "No se pudo procesar el pago.", "error");
         }
 
     } catch (error) {
-        console.error('Error en el pago:', error);
-        showAlert("Error de Conexión", "No se pudo conectar con el servidor", "error");
+        console.error('Error al procesar pago:', error);
+        showAlert("Error de Conexión", "No se pudo conectar con el servidor de pagos", "error");
     }
 }
 
-/** Maneja el inicio de un examen */
-async function handleStartExam(certId) {
+async function handleStartExam(certId) { 
+    // (El 'certId' ahora viene como argumento, no de 'e.target')
     const token = localStorage.getItem('token');
 
     if (!token) {
         showAlert("Autenticación Requerida", "Debes iniciar sesión para comenzar el examen", "warning");
-        openLoginModal();
+        if (typeof openLoginModal === 'function') openLoginModal();
         return;
     }
-
+    
     try {
-        const response = await fetch(`${API_BASE_URL}/exams/start`, {
+        // (Tu lógica de fetch, pero usando la URL de API de exámenes)
+        const response = await fetch(`${API_EXAMS_URL}/start`, { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
+            // (Tu backend 'start' (el que me mostraste) deduce el certId 
+            // del pago del usuario, por lo que NO es necesario enviarlo en el body)
         });
 
         const data = await response.json();
@@ -306,15 +302,16 @@ async function handleStartExam(certId) {
         if (response.ok) {
             showAlert(
                 "¡Examen Iniciado!", 
-                `Tienes ${data.certificacion.tiempo} minutos para completar el examen`, 
+                `Tienes ${data.certificacion.tiempo} minutos. Redirigiendo...`, 
                 "info"
             );
             
-            // Aquí podrías redirigir a una página de examen
-            console.log('Preguntas del examen:', data.preguntas);
+            sessionStorage.setItem('examData', JSON.stringify(data));
             
-            // TODO: Implementar página de examen
-            // window.location.href = `examen.html?certId=${certId}`;
+            setTimeout(() => {
+                // (Asegúrate de que la ruta a examen.html sea correcta desde certificaciones.html)
+                window.location.href = 'examen.html'; 
+            }, 1500);
 
         } else {
             showAlert("Error", data.error || "No se pudo iniciar el examen", "error");
@@ -325,6 +322,7 @@ async function handleStartExam(certId) {
         showAlert("Error de Conexión", "No se pudo conectar con el servidor", "error");
     }
 }
+
 
 // ===================== INICIALIZACIÓN =====================
 
