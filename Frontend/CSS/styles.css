@@ -997,3 +997,255 @@ h2 {
     font-size: 1.1em;
   }
 }
+
+/* ========== ESTILOS PARA EL EXAMEN ========== */
+
+.exam-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.exam-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.exam-header h2 {
+  margin: 0 0 15px 0;
+  font-size: 2em;
+}
+
+.exam-header p {
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+/* Estilos del temporizador */
+.timer-container {
+  background: rgba(255, 255, 255, 0.95);
+  color: #2c3e50;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 20px auto;
+  max-width: 300px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.timer-icon {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  animation: pulse 2s infinite;
+}
+
+.timer-display {
+  font-size: 3em;
+  font-weight: bold;
+  font-family: "Courier New", monospace;
+  letter-spacing: 3px;
+  margin: 10px 0;
+}
+
+.timer-label {
+  font-size: 0.9em;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Estados de advertencia del temporizador */
+.timer-warning {
+  background: rgba(255, 193, 7, 0.95) !important;
+  animation: shake 0.5s;
+}
+
+.timer-warning .timer-display {
+  color: #f39c12;
+}
+
+.timer-critical {
+  background: rgba(231, 76, 60, 0.95) !important;
+  animation: shake 0.5s infinite;
+}
+
+.timer-critical .timer-display {
+  color: #c0392b;
+  animation: blink 1s infinite;
+}
+
+/* Animaciones */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes blink {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.5;
+  }
+}
+
+.exam-instructions {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.exam-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.question-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #8e2de2;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.question-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.question-card h3 {
+  color: #2c3e50;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-left: 10px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.option-label:hover {
+  background: #e9ecef;
+  border-color: #8e2de2;
+  transform: translateX(5px);
+}
+
+.option-label input[type="radio"] {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #8e2de2;
+}
+
+.option-label input[type="radio"]:checked + * {
+  font-weight: bold;
+}
+
+.option-label:has(input[type="radio"]:checked) {
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+  border-color: #8e2de2;
+  font-weight: 500;
+}
+
+.btn-submit-exam {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 18px 40px;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+  align-self: center;
+}
+
+.btn-submit-exam:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.btn-submit-exam:active {
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .exam-container {
+    padding: 15px;
+  }
+
+  .exam-header {
+    padding: 20px;
+  }
+
+  .exam-header h2 {
+    font-size: 1.5em;
+  }
+
+  .question-card {
+    padding: 20px;
+  }
+
+  .question-card h3 {
+    font-size: 1.1em;
+  }
+
+  .option-label {
+    padding: 12px;
+  }
+
+  .btn-submit-exam {
+    padding: 15px 30px;
+    font-size: 1.1em;
+  }
+}

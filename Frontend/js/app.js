@@ -8,6 +8,8 @@ const API_BASE_URL = "http://localhost:3000/api";
 
 // Variable global para almacenar las preguntas del examen
 let currentExam = null;
+let examTimer = null;
+let timeRemaining = 0;
 
 /** Muestra el modal de login */
 function openLoginModal() {
@@ -370,15 +372,24 @@ function displayExamQuestions(examData) {
   examSection.className = "exam-container";
   examSection.style.gridColumn = "1 / -1";
 
-  // Encabezado del examen
+  // Encabezado del examen con temporizador
   const examHeader = document.createElement("div");
   examHeader.className = "exam-header";
-  examHeader.innerHTML = `
+
+  const headerHTML = `
         <h2>📝 ${examData.certificacion.nombre}</h2>
-        <p><strong>Tiempo:</strong> ${examData.certificacion.tiempo} minutos</p>
+        <div class="timer-container" id="exam-timer">
+            <div class="timer-icon">⏰</div>
+            <div class="timer-display">
+                <span id="timer-minutes">00</span>:<span id="timer-seconds">00</span>
+            </div>
+            <div class="timer-label">Tiempo restante</div>
+        </div>
         <p><strong>Puntuación mínima:</strong> ${examData.certificacion.puntajeMinimo}%</p>
-        <p class="exam-instructions">Responde todas las preguntas y presiona "Enviar Respuestas" al finalizar.</p>
+        <p class="exam-instructions">Responde todas las preguntas. El examen se enviará automáticamente al finalizar el tiempo.</p>
     `;
+
+  examHeader.innerHTML = headerHTML;
 
   examSection.appendChild(examHeader);
 
@@ -422,6 +433,7 @@ function displayExamQuestions(examData) {
   // Botón de enviar
   const submitButton = document.createElement("button");
   submitButton.type = "submit";
+  submitButton.id = "submit-exam-btn";
   submitButton.className = "btn-submit-exam";
   submitButton.textContent = "📤 Enviar Respuestas";
 
@@ -432,6 +444,9 @@ function displayExamQuestions(examData) {
   // Event listener para el envío del formulario
   form.addEventListener("submit", handleSubmitExam);
 
+  // Iniciar el temporizador
+  startExamTimer(examData.certificacion.tiempo);
+
   // Scroll al inicio
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -439,6 +454,12 @@ function displayExamQuestions(examData) {
 /** Maneja el envío de respuestas del examen */
 async function handleSubmitExam(e) {
   e.preventDefault();
+
+  // Detener el temporizador
+  if (examTimer) {
+    clearInterval(examTimer);
+    examTimer = null;
+  }
 
   const token = localStorage.getItem("token");
   if (!token) {
@@ -469,7 +490,18 @@ async function handleSubmitExam(e) {
       "Por favor responde todas las preguntas antes de enviar",
       "warning"
     );
+    // Reiniciar temporizador si aún hay tiempo
+    if (timeRemaining > 0) {
+      startExamTimer(Math.ceil(timeRemaining / 60));
+    }
     return;
+  }
+
+  // Deshabilitar el botón de envío para evitar múltiples envíos
+  const submitBtn = document.getElementById("submit-exam-btn");
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "⏳ Enviando...";
   }
 
   try {
@@ -492,6 +524,10 @@ async function handleSubmitExam(e) {
         data.error || "No se pudieron enviar las respuestas",
         "error"
       );
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "📤 Enviar Respuestas";
+      }
     }
   } catch (error) {
     console.error("Error al enviar respuestas:", error);
@@ -500,6 +536,10 @@ async function handleSubmitExam(e) {
       "No se pudo conectar con el servidor",
       "error"
     );
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "📤 Enviar Respuestas";
+    }
   }
 }
 
@@ -588,6 +628,104 @@ async function downloadCertificate() {
     console.error("Error al descargar certificado:", error);
     showAlert("Error", "No se pudo descargar el certificado", "error");
   }
+}
+
+/** Inicia el temporizador del examen */
+function startExamTimer(minutes) {
+  // Convertir minutos a segundos
+  timeRemaining = minutes * 60;
+
+  const timerMinutes = document.getElementById("timer-minutes");
+  const timerSeconds = document.getElementById("timer-seconds");
+  const timerContainer = document.getElementById("exam-timer");
+
+  if (!timerMinutes || !timerSeconds) {
+    console.error("Elementos del temporizador no encontrados");
+    return;
+  }
+
+  // Actualizar display inicial
+  updateTimerDisplay(timerMinutes, timerSeconds, timeRemaining);
+
+  // Limpiar cualquier temporizador existente
+  if (examTimer) {
+    clearInterval(examTimer);
+  }
+
+  // Crear nuevo temporizador que se ejecuta cada segundo
+  examTimer = setInterval(() => {
+    timeRemaining--;
+
+    // Actualizar display
+    updateTimerDisplay(timerMinutes, timerSeconds, timeRemaining);
+
+    // Cambiar color según el tiempo restante
+    if (timeRemaining <= 300 && timeRemaining > 60) {
+      // 5 minutos
+      timerContainer.classList.add("timer-warning");
+      timerContainer.classList.remove("timer-critical");
+
+      // Alerta a los 5 minutos (solo una vez)
+      if (timeRemaining === 300) {
+        showAlert(
+          "⏰ Tiempo",
+          "Te quedan 5 minutos para terminar el examen",
+          "warning"
+        );
+      }
+    } else if (timeRemaining <= 60) {
+      // 1 minuto
+      timerContainer.classList.add("timer-critical");
+      timerContainer.classList.remove("timer-warning");
+
+      // Alerta al minuto (solo una vez)
+      if (timeRemaining === 60) {
+        showAlert(
+          "⚠️ ¡Último minuto!",
+          "Te queda 1 minuto para terminar el examen",
+          "error"
+        );
+      }
+    }
+
+    // Cuando el tiempo se acaba
+    if (timeRemaining <= 0) {
+      clearInterval(examTimer);
+      examTimer = null;
+      autoSubmitExam();
+    }
+  }, 1000);
+}
+
+/** Actualiza el display del temporizador */
+function updateTimerDisplay(minutesElement, secondsElement, totalSeconds) {
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+
+  minutesElement.textContent = mins.toString().padStart(2, "0");
+  secondsElement.textContent = secs.toString().padStart(2, "0");
+}
+
+/** Envía automáticamente el examen cuando el tiempo se acaba */
+async function autoSubmitExam() {
+  showAlert(
+    "⏰ Tiempo Agotado",
+    "El tiempo del examen ha finalizado. Tus respuestas se enviarán automáticamente.",
+    "warning"
+  );
+
+  // Esperar 2 segundos para que el usuario vea la alerta
+  setTimeout(() => {
+    const form = document.getElementById("exam-form");
+    if (form) {
+      // Crear un evento de submit
+      const submitEvent = new Event("submit", {
+        bubbles: true,
+        cancelable: true,
+      });
+      form.dispatchEvent(submitEvent);
+    }
+  }, 2000);
 }
 
 // ===================== INICIALIZACIÓN =====================
