@@ -7,7 +7,7 @@ const { authRequired } = require('../middleware/auth.middleware');
 // ============= RUTAS PÚBLICAS (no requieren token) =============
 router.post("/login", authController.login);
 router.get("/certifications", authController.getCertifications);
-
+router.post("/contacto",authController.submitFormContact );
 // ============= RUTAS PROTEGIDAS (requieren token) =============
 router.post("/logout", authRequired, authController.logout);
 router.post("/payment", authRequired, authController.payment);

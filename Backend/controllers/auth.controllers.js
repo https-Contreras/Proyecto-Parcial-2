@@ -16,7 +16,7 @@ exports.login = (req, res) => {
     if (!cuenta || !password) {
         return res.status(400).json({
             error: "Faltan campos obligatorios: 'cuenta' y 'password'.",
-            ejemplo: { cuenta: "jael_contreras", password: "jael123" }
+            ejemplo: { cuenta: "jael_contreras", password: "abcd123" }
         });
     }
 
@@ -150,6 +150,49 @@ exports.start = (req, res) => {
         preguntas: questionsWithShuffledOptions
     });
 };
+
+
+const messages = [];
+
+/**
+ * Recibe un mensaje del formulario de contacto.
+ * Guarda en 'messages' e imprime en consola.
+ */
+exports.submitFormContact = (req, res) => {
+    // 1. Recuperar datos del body
+    const { nombre, correo, pregunta } = req.body;
+    
+    if (!nombre || !correo || !pregunta) {
+        return res.status(400).json({ error: "Faltan campos (nombre, correo, pregunta)." });
+    }
+    
+    const nuevoMensaje = {
+        nombre,
+        correo,
+        pregunta,
+        fecha: new Date().toISOString()
+    };
+
+    // 2. Guardar en el arreglo de objetos en memoria
+    messages.push(nuevoMensaje);
+    
+    // 3. Imprimir en consola CADA VEZ (Requisito del examen)
+    console.log("=========================================");
+    console.log("== NUEVO MENSAJE DE CONTACTO RECIBIDO ==");
+    console.log(nuevoMensaje);
+    console.log("-----------------------------------------");
+    console.log(`Total de mensajes: ${messages.length}`);
+    console.log("--- Historial Completo de Mensajes ---");
+    console.log(messages); // Imprime todo el arreglo
+    console.log("=========================================");
+
+
+    // 4. Responder al front (para el alert "Mensaje Enviado")
+    res.status(200).json({ message: "Mensaje recibido exitosamente" });
+};
+
+
+
 
 // ============= ENVIAR RESPUESTAS =============
 exports.submit = (req, res) => {
