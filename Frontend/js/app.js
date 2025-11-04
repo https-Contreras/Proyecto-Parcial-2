@@ -2,7 +2,7 @@
 const modal = document.getElementById('login-modal');
 const authButton = document.getElementById('auth-button');
 const userDisplay = document.getElementById('user-account-display');
-
+const loginForm = document.getElementById("login-form");
 
 const API_BASE_URL = "http://localhost:3000/api";
 
