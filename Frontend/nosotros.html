@@ -1,85 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Nosotros | LexiCode</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-    
+  </head>
+  <body>
     <header id="main-header">
-          <div class="logo-container">
-            <img src="/Frontend/images/Logo.png" alt="Logotipo de la Empresa Lexicode" class="logo">
-            <h1>LexiCode</h1>
-            <p class="slogan">El Lenguaje Universal de la Certificación Técnica.</p>
+      <!-- Logo y Nombre -->
+      <div class="logo-container">
+        <img
+          src="/Frontend/images/Logo.png"
+          alt="Logotipo LexiCode"
+          class="logo"
+        />
+        <div>
+          <h1>LexiCode</h1>
+          <p class="slogan">
+            El Lenguaje Universal de la Certificación Técnica
+          </p>
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="certificaciones.html">Certificaciones</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="nosotros.html" class="active">Nosotros</a></li> 
-            </ul>
-        </nav>
-       <div class="auth-area">
-            <span id="user-account-display" style="display: none;"></span>
-            <button id="auth-button">Login</button>
-            
-        </div>
+      </div>
+
+      <!-- Navegación Central -->
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="certificaciones.html">Certificaciones</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+        </ul>
+      </nav>
+
+      <!-- Área de Autenticación -->
+      <div class="auth-area">
+        <span id="user-account-display" style="display: none"
+          >Hola, Usuario</span
+        >
+        <button id="auth-button">Login</button>
+      </div>
     </header>
 
     <main class="page-content1">
-    
-        <section class="about-us-section">
-            <h2>¿Quiénes Somos?</h2>
-            <p>En LexiCode, estamos dedicados a la formación de la élite tecnológica. Ofrecemos certificaciones de Desarrollador Full Stack rigurosas y basadas en proyectos reales, asegurando que nuestros egresados no solo conozcan la tecnología, sino que puedan construir el futuro con ella.</p>
+      <section class="about-us-section">
+        <h2>¿Quiénes Somos?</h2>
+        <p>
+          En LexiCode, estamos dedicados a la formación de la élite tecnológica.
+          Ofrecemos certificaciones de Desarrollador Full Stack rigurosas y
+          basadas en proyectos reales, asegurando que nuestros egresados no solo
+          conozcan la tecnología, sino que puedan construir el futuro con ella.
+        </p>
 
-            <div class="mission-vision-values">
-                <h3>Misión</h3>
-                <p>Capacitar a la próxima generación de desarrolladores Full Stack a través de programas de certificación rigurosos, prácticos y actualizados. Nuestra misión es dotar a los profesionales de las habilidades de Front-End, Back-End y Cloud más demandadas por la industria, asegurando que se conviertan en arquitectos de soluciones integrales capaces de Ascender en el panorama tecnológico global.</p>
-            </div>
-
-            <div class="mission-vision-values">
-                <h3>Visión</h3>
-                <p>Ser el referente global en certificaciones de desarrollo Full Stack, reconocido por producir talento tecnológico de élite que impulsa la innovación y la transformación digital en las empresas líderes. Buscamos ser el punto de partida para las carreras más exitosas en la ingeniería de software.</p>
-            </div>
-
-            <div class="mission-vision-values">
-                <h3>Nuestros Valores Fundamentales</h3>
-                <ul>
-                    <li> Excelencia Técnica: Compromiso inquebrantable con la enseñanza de las mejores prácticas de codificación y arquitectura.</li>
-                    <li> Innovación Continua: Mantenemos nuestro currículo a la vanguardia, adaptándonos rápidamente a las tecnologías emergentes del mercado.</li>
-                    <li> Orientación a Resultados: Nuestros programas se miden por el éxito laboral y el crecimiento tangible que nuestros graduados aportan a la industria tecnológica.</li>
-                    <li> Integridad y Transparencia: Fomentamos un entorno de aprendizaje honesto y ético, valorando la autenticidad en cada paso del camino.</li>
-                    <li> Comunidad y Colaboración: Construimos una red sólida de profesionales que se apoyan mutuamente en su desarrollo y éxito continuo.</li>
-                </ul>
-            </div>
-        </section>
-        
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Acceso de Usuarios</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="cuenta">Cuenta:</label>
-                    <input type="text" id="cuenta" name="cuenta" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="cta-button">Entrar</button>
-            </form>
+        <div class="mission-vision-values">
+          <h3>Misión</h3>
+          <p>
+            Capacitar a la próxima generación de desarrolladores Full Stack a
+            través de programas de certificación rigurosos, prácticos y
+            actualizados. Nuestra misión es dotar a los profesionales de las
+            habilidades de Front-End, Back-End y Cloud más demandadas por la
+            industria, asegurando que se conviertan en arquitectos de soluciones
+            integrales capaces de Ascender en el panorama tecnológico global.
+          </p>
         </div>
-    </div>
-     </main>
-   
-     <footer id="main-footer">
-            <p>&copy; 2025 LexiCode. Todos los derechos reservados.</p>
-            <div class="social-media">
-                <a href="[URL_RED_SOCIAL]" target="_blank">LinkedIn</a>
+
+        <div class="mission-vision-values">
+          <h3>Visión</h3>
+          <p>
+            Ser el referente global en certificaciones de desarrollo Full Stack,
+            reconocido por producir talento tecnológico de élite que impulsa la
+            innovación y la transformación digital en las empresas líderes.
+            Buscamos ser el punto de partida para las carreras más exitosas en
+            la ingeniería de software.
+          </p>
+        </div>
+
+        <div class="mission-vision-values">
+          <h3>Nuestros Valores Fundamentales</h3>
+          <ul>
+            <li>
+              Excelencia Técnica: Compromiso inquebrantable con la enseñanza de
+              las mejores prácticas de codificación y arquitectura.
+            </li>
+            <li>
+              Innovación Continua: Mantenemos nuestro currículo a la vanguardia,
+              adaptándonos rápidamente a las tecnologías emergentes del mercado.
+            </li>
+            <li>
+              Orientación a Resultados: Nuestros programas se miden por el éxito
+              laboral y el crecimiento tangible que nuestros graduados aportan a
+              la industria tecnológica.
+            </li>
+            <li>
+              Integridad y Transparencia: Fomentamos un entorno de aprendizaje
+              honesto y ético, valorando la autenticidad en cada paso del
+              camino.
+            </li>
+            <li>
+              Comunidad y Colaboración: Construimos una red sólida de
+              profesionales que se apoyan mutuamente en su desarrollo y éxito
+              continuo.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div id="login-modal" class="modal">
+        <div class="modal-content">
+          <span class="close-button">&times;</span>
+          <h2>Acceso de Usuarios</h2>
+          <form id="login-form">
+            <div class="form-group">
+              <label for="cuenta">Cuenta:</label>
+              <input type="text" id="cuenta" name="cuenta" required />
             </div>
-        </footer>
-<script src="./js/app.js"></script>
+            <div class="form-group">
+              <label for="password">Contraseña:</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+            <button type="submit" class="cta-button">Entrar</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer id="main-footer">
+      <p>&copy; 2025 LexiCode. Todos los derechos reservados.</p>
+      <div class="social-media">
+        <a href="[URL_RED_SOCIAL]" target="_blank">LinkedIn</a>
+      </div>
+    </footer>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

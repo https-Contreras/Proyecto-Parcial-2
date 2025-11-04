@@ -1,142 +1,175 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LexiCode- Inicio</title>
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon"> 
-    <link rel="stylesheet" href="css/styles.css">
-   
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/styles.css" />
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
     <header id="main-header">
-        <div class="logo-container">
-            <img src="/Frontend/images/Logo.png" alt="Logotipo de la Empresa Lexicode" class="logo">
-            <h1>LexiCode</h1>
-            <p class="slogan">El Lenguaje Universal de la Certificación Técnica.</p>
+      <!-- Logo y Nombre -->
+      <div class="logo-container">
+        <img
+          src="/Frontend/images/Logo.png"
+          alt="Logotipo LexiCode"
+          class="logo"
+        />
+        <div>
+          <h1>LexiCode</h1>
+          <p class="slogan">
+            El Lenguaje Universal de la Certificación Técnica
+          </p>
         </div>
-        
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active">Inicio</a></li>
-                <li><a href="certificaciones.html">Certificaciones</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-            </ul>
-        </nav>
-        
-        <div class="auth-area">
-            <span id="user-account-display" style="display: none;"></span>
-            <button id="auth-button">Login</button>
-        </div>
+      </div>
+
+      <!-- Navegación Central -->
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="certificaciones.html">Certificaciones</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+        </ul>
+      </nav>
+
+      <!-- Área de Autenticación -->
+      <div class="auth-area">
+        <span id="user-account-display" style="display: none"
+          >Hola, Usuario</span
+        >
+        <button id="auth-button">Login</button>
+      </div>
     </header>
 
     <main>
-        <!-- SECCIONES DE CONTENIDO (Omitidas por brevedad, usar las de la respuesta anterior) -->
-        <section id="hero-banner" class="section-full-width">
-            <h2>Certifícate en el Desarrollo Web del Mañana</h2>
-            <p>Asegura tu futuro con las certificaciones más demandadas en el mercado.</p>
-            <a href="certificaciones.html" class="cta-button">Ver Certificaciones</a>
-        </section>
+      <!-- SECCIONES DE CONTENIDO (Omitidas por brevedad, usar las de la respuesta anterior) -->
+      <section id="hero-banner" class="section-full-width">
+        <h2>Certifícate en el Desarrollo Web del Mañana</h2>
+        <p>
+          Asegura tu futuro con las certificaciones más demandadas en el
+          mercado.
+        </p>
+        <a href="certificaciones.html" class="cta-button"
+          >Ver Certificaciones</a
+        >
+      </section>
 
-    <section id="destacados" class="section-centered">
-    <h2>¿Por Qué Elegirnos?</h2>
-    <div class="features-grid">
-        <!-- Tarjeta 1: Validacion Rigurosa -->
-        <div class="feature-item">
+      <section id="destacados" class="section-centered">
+        <h2>¿Por Qué Elegirnos?</h2>
+        <div class="features-grid">
+          <!-- Tarjeta 1: Validacion Rigurosa -->
+          <div class="feature-item">
             <h3>Validación de Habilidades Reales</h3>
-            <p>Nuestros exámenes están diseñados por expertos de la industria para evaluar no solo teoría, sino la capacidad práctica para resolver problemas complejos de desarrollo web.</p>
-        </div>
-        
-        <!-- Tarjeta 2: Diseño de Certificados -->
-        <div class="feature-item">
-            <h3>Certificados de Alto Impacto</h3>
-            <p>Obtén un certificado PDF elegante y profesional, diseñado para destacar en tu currículum y ser inmediatamente reconocido por reclutadores y empresas tecnológicas.</p>
-        </div>
-        
-        <!-- Tarjeta 3: Enfoque en Tecnología -->
-        <div class="feature-item">
-            <h3>Tecnología de Vanguardia</h3>
-            <p>Nos enfocamos en Node.js, React, y las herramientas más demandadas. Aseguramos que tu certificación esté alineada con las necesidades actuales del mercado global.</p>
-        </div>
-        
-        <!-- Tarjeta 4: Seguridad y Trazabilidad (Opcional, pero complementa el diseño) -->
-        <div class="feature-item">
-            <h3>Proceso de Examen Seguro</h3>
-            <p>Implementamos un sistema de tokens (UUID) y rutas protegidas para garantizar la integridad de tu evaluación. La lógica de calificación reside 100% en el servidor.</p>
-        </div>
-    </div>
-</section>
-
-<section id="cta-secondary" class="section-callout">
-    
-    <h2>¡Prepárate para el Examen!</h2>
-    <p class="section-intro">
-        Tu certificación está a un paso. Utiliza nuestros recursos oficiales 
-        diseñados para asegurar tu éxito.
-    </p>
-
-    <div class="resource-hub">
-
-        <div class="resource-card">
-            <span class="resource-icon">📚</span> <h3>Guía de Estudio Oficial</h3>
             <p>
-                Descarga el temario completo, los conceptos clave y 
-                ejemplos de código que cubrimos en la certificación.
+              Nuestros exámenes están diseñados por expertos de la industria
+              para evaluar no solo teoría, sino la capacidad práctica para
+              resolver problemas complejos de desarrollo web.
+            </p>
+          </div>
+
+          <!-- Tarjeta 2: Diseño de Certificados -->
+          <div class="feature-item">
+            <h3>Certificados de Alto Impacto</h3>
+            <p>
+              Obtén un certificado PDF elegante y profesional, diseñado para
+              destacar en tu currículum y ser inmediatamente reconocido por
+              reclutadores y empresas tecnológicas.
+            </p>
+          </div>
+
+          <!-- Tarjeta 3: Enfoque en Tecnología -->
+          <div class="feature-item">
+            <h3>Tecnología de Vanguardia</h3>
+            <p>
+              Nos enfocamos en Node.js, React, y las herramientas más
+              demandadas. Aseguramos que tu certificación esté alineada con las
+              necesidades actuales del mercado global.
+            </p>
+          </div>
+
+          <!-- Tarjeta 4: Seguridad y Trazabilidad (Opcional, pero complementa el diseño) -->
+          <div class="feature-item">
+            <h3>Proceso de Examen Seguro</h3>
+            <p>
+              Implementamos un sistema de tokens (UUID) y rutas protegidas para
+              garantizar la integridad de tu evaluación. La lógica de
+              calificación reside 100% en el servidor.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="cta-secondary" class="section-callout">
+        <h2>¡Prepárate para el Examen!</h2>
+        <p class="section-intro">
+          Tu certificación está a un paso. Utiliza nuestros recursos oficiales
+          diseñados para asegurar tu éxito.
+        </p>
+
+        <div class="resource-hub">
+          <div class="resource-card">
+            <span class="resource-icon">📚</span>
+            <h3>Guía de Estudio Oficial</h3>
+            <p>
+              Descarga el temario completo, los conceptos clave y ejemplos de
+              código que cubrimos en la certificación.
             </p>
             <a href="#" class="btn btn-secondary">Descargar Guía (PDF)</a>
-        </div>
+          </div>
 
-        <div class="resource-card">
-            <span class="resource-icon">⏱️</span> <h3>Examen de Práctica</h3>
+          <div class="resource-card">
+            <span class="resource-icon">⏱️</span>
+            <h3>Examen de Práctica</h3>
             <p>
-                Simula el examen real con nuestro test de práctica cronometrado. 
-                Mide tu tiempo y revisa tus respuestas.
+              Simula el examen real con nuestro test de práctica cronometrado.
+              Mide tu tiempo y revisa tus respuestas.
             </p>
             <a href="#" class="btn btn-secondary">Iniciar Examen</a>
-        </div>
+          </div>
 
-        <div class="resource-card">
-            <span class="resource-icon">💬</span> <h3>Foro de Comunidad</h3>
+          <div class="resource-card">
+            <span class="resource-icon">💬</span>
+            <h3>Foro de Comunidad</h3>
             <p>
-                ¿Atascado en un tema? Únete a nuestra comunidad de Discord 
-                para preguntar a instructores y compañeros.
+              ¿Atascado en un tema? Únete a nuestra comunidad de Discord para
+              preguntar a instructores y compañeros.
             </p>
             <a href="#" class="btn btn-secondary">Unirse al Foro</a>
+          </div>
         </div>
-
-    </div>
-</section>
+      </section>
     </main>
 
     <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Acceso de Usuarios</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="cuenta">Cuenta:</label>
-                    <input type="text" id="cuenta" name="cuenta" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="cta-button">Entrar</button>
-            </form>
-        </div>
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Acceso de Usuarios</h2>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="cuenta">Cuenta:</label>
+            <input type="text" id="cuenta" name="cuenta" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <button type="submit" class="cta-button">Entrar</button>
+        </form>
+      </div>
     </div>
 
     <footer id="main-footer">
-        <p>&copy; 2025 LexiCode. Todos los derechos reservados.</p>
-        <div class="social-media">
-            <a href="[URL_RED_SOCIAL]" target="_blank">LinkedIn</a>
-        </div>
+      <p>&copy; 2025 LexiCode. Todos los derechos reservados.</p>
+      <div class="social-media">
+        <a href="[URL_RED_SOCIAL]" target="_blank">LinkedIn</a>
+      </div>
     </footer>
 
     <!-- Scripts para la lógica del Front -->
     <script src="js/app.js"></script>
-</body>
+  </body>
 </html>
