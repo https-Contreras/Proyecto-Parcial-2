@@ -6,15 +6,6 @@ const loginForm = document.getElementById("login-form");
 const pay = document.getElementById("btn-pay-node");
 
 const API_BASE_URL = "http://localhost:3000/api";
-pay.addEventListener("click", () => {
-  realizarPagoSimulado("node-js", 89)
-    .then((resultado) => {
-      alert(`Resultado del pago: ${JSON.stringify(resultado)}`);
-    })
-    .catch((err) => {
-      console.error("Error al realizar el pago simulado:", err);
-    });
-});
 
 /** Muestra el modal de login */
 function openLoginModal() {
@@ -91,13 +82,58 @@ async function handleLoginSubmit(e) {
 
     let data;
     try {
-      data = await response.json();
-    } catch (parseErr) {
-      console.warn(
-        "Respuesta no JSON del servidor. Posible error interno o 401 sin cuerpo.",
-        parseErr
+      const response = await fetch(`${API_BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cuenta, password }),
+      });
+
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseErr) {
+        console.warn(
+          "Respuesta no JSON del servidor. Posible error interno o 401 sin cuerpo.",
+          parseErr
+        );
+        data = {};
+      }
+
+      if (response.ok) {
+        // Acceso permitido
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userName", data.user.nombre);
+        localStorage.setItem("userAccount", data.user.cuenta);
+
+        updateAuthUI();
+
+        showAlert(
+          "¡Acceso Permitido!",
+          `Bienvenido, ${data.user.nombre}.`,
+          "success"
+        );
+      } else if (response.status === 401) {
+        showAlert(
+          "Error en las Credenciales",
+          "La cuenta o la contraseña son incorrectas.",
+          "error"
+        );
+      } else {
+        showAlert(
+          "Error del Servidor",
+          data.message || "Ocurrió un error inesperado en el servidor.",
+          "error"
+        );
+      }
+    } catch (error) {
+      console.error("Error al realizar la petición de login:", error);
+      showAlert(
+        "Error de Conexión",
+        "No se pudo conectar con el servicio de autenticación. Asegúrate de que el backend esté corriendo en el puerto 3000.",
+        "error"
       );
-      data = {};
     }
     console.log(data);
     if (response.ok) {
@@ -158,6 +194,16 @@ document.addEventListener("DOMContentLoaded", () => {
     closeButton.addEventListener("click", closeLoginModal);
   }
 
+  pay.addEventListener("click", () => {
+    realizarPagoSimulado("node-js", 89)
+      .then((resultado) => {
+        alert(`Resultado del pago: ${JSON.stringify(resultado)}`);
+      })
+      .catch((err) => {
+        console.error("Error al realizar el pago simulado:", err);
+      });
+  });
+
   // Cerrar modal si se hace clic fuera de él
   window.addEventListener("click", (event) => {
     if (event.target === modal) {
@@ -182,14 +228,17 @@ async function realizarPagoSimulado(certId, costo) {
   };
 
   try {
-    const respuesta = await fetch(API_PAGO_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Authorization': 'Bearer ' + tokenDeUsuario // Añadir si Jael requiere un token
-      },
-      body: JSON.stringify(datosPago),
-    });
+    const respuesta = await fetch(
+      "http://localhost:3000/api/exams/simular_pago",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // 'Authorization': 'Bearer ' + tokenDeUsuario // Añadir si Jael requiere un token
+        },
+        body: JSON.stringify(datosPago),
+      }
+    );
 
     const resultado = await respuesta.json();
 

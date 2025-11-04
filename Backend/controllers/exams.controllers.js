@@ -31,5 +31,6 @@ exports.simularPago = (req, res) => {
 
   res.status(200).json({
     message: "pago procesado exitosamente",
+    estado: "COMPLETADO",
   });
 };
