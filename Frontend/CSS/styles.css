@@ -552,7 +552,7 @@ h2 {
 .form-group input[type="email"],
 .form-group textarea {
     background-color: var(--input-bg); /* Fondo más oscuro que la tarjeta */
-    color: #ffffff;
+    color: black;
     border: 1px solid #555; /* Borde más definido */
     border-radius: 8px; /* Bordes redondeados */
     padding: 15px;
