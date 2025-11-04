@@ -3,10 +3,10 @@ module.exports = [
         id: 1,
         nombre: "Certificación Python Fundamentals",
         descripcion: "Domina los fundamentos de Python, el lenguaje más demandado en ciencia de datos y desarrollo web",
-        tiempo: 30, // minutos
-        puntajeMinimo: 75, // porcentaje
+        tiempo: 30,
+        puntajeMinimo: 75,
         costo: 2500,
-        activa: true, // Solo esta está funcionando
+        activa: true,
         disponibleDesde: null
     },
     {
@@ -17,7 +17,8 @@ module.exports = [
         puntajeMinimo: 80,
         costo: 3000,
         activa: false,
-        disponibleDesde: "2025-12-01" // Disponible en diciembre
+
+        disponibleDesde: "2025-12-01"
     },
     {
         id: 3,
@@ -27,7 +28,8 @@ module.exports = [
         puntajeMinimo: 70,
         costo: 3500,
         activa: false,
-        disponibleDesde: "2026-01-15" // Disponible en enero 2026
+        disponibleDesde: "2026-01-15"
+
     },
     {
         id: 4,
@@ -37,6 +39,7 @@ module.exports = [
         puntajeMinimo: 85,
         costo: 4000,
         activa: false,
-        disponibleDesde: "2026-02-01" // Disponible en febrero 2026
+        disponibleDesde: "2026-02-01"
     }
 ];
+

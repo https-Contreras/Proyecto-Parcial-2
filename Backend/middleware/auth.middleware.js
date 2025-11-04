@@ -1,24 +1,28 @@
+
 const crypto = require('crypto');
 
-// 1. Almacén de sesiones activas en memoria
-// ¡CAMBIO IMPORTANTE!
-// Ahora guardamos un OBJETO en lugar de solo el userId.
-// Guarda: { token => { userId: string, hasPaid: boolean } }
+// Almacén de sesiones activas en memoria
+// Guarda: { token => { userId: string } }
+>>>>>>> yaelBranch
 const sessions = new Map();
 
 /**
  * Crea un nuevo token de sesión único y lo asocia con el userId.
+<<<<<<< HEAD
  * @param {string} userId - El ID único del usuario (ej: 'u001').
+=======
+ * @param {string} userId - El ID único del usuario (ej: 'jael_contreras').
+
  * @returns {string} El token de sesión generado.
  */
 exports.createSession = (userId) => {
     const token = crypto.randomUUID();
     
-    // ¡CAMBIO IMPORTANTE!
-    // Guardamos el objeto de sesión completo.
+
     const sessionData = {
         userId: userId,
-        hasPaid: false // El pago se inicializa en falso
+        createdAt: new Date()
+
     };
     
     sessions.set(token, sessionData);
@@ -27,6 +31,25 @@ exports.createSession = (userId) => {
     return token;
 };
 
+
+/**
+ * Elimina una sesión activa (logout)
+ * @param {string} token - El token de la sesión a eliminar
+ */
+exports.deleteSession = (token) => {
+    if (sessions.has(token)) {
+        const sessionData = sessions.get(token);
+        sessions.delete(token);
+        console.log(`[SESSION] Sesión eliminada para ${sessionData.userId}. Total: ${sessions.size}`);
+        return true;
+    }
+    return false;
+};
+
+/**
+ * Middleware de autenticación
+ * Verifica que el token sea válido y adjunta userId al request
+ */
 
 exports.authRequired = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -47,13 +70,15 @@ exports.authRequired = (req, res, next) => {
         return res.status(401).json({ error: "Token inválido o sesión expirada." });
     }
 
-    // ¡CAMBIO IMPORTANTE!
-    // Obtenemos el objeto de sesión completo
+
     const sessionData = sessions.get(token);
 
-    // Adjuntamos los datos a la solicitud (req) para que los controladores los usen
-    req.userId = sessionData.userId;     // Para mantener la compatibilidad
-    req.sessionData = sessionData; // Adjuntamos la sesión completa (incluye hasPaid)
+    // Adjuntamos los datos a la solicitud
+    req.userId = sessionData.userId;
+    req.token = token; // Para poder hacer logout después
+    req.sessionData = sessionData;
 
     next(); 
 };
+
+
