@@ -7,7 +7,7 @@ const API_PAGO_URL = "http://localhost:3000/api/pago/simular";
  * @param {string} certId - El ID de la certificación (ej: 'node-js').
  * @param {number} costo - El costo del examen.
  */
-async function realizarPagoSimulado(certId, costo) {
+export async function realizarPagoSimulado(certId, costo) {
   // 1. Obtener datos del usuario (simulados por ahora, luego vendrán del login/auth.js)
   const datosPago = {
     certId: certId,
@@ -69,7 +69,8 @@ function manejarRespuestaDePago(resultado, certId) {
     alert("❌ Error: Fondos insuficientes en la simulación de pago.");
   } else {
     alert(
-      ` Error desconocido al procesar el pago. Código: ${ resultado.codigoError || "N/A"
+      ` Error desconocido al procesar el pago. Código: ${
+        resultado.codigoError || "N/A"
       }`
     );
   }
@@ -78,36 +79,35 @@ function manejarRespuestaDePago(resultado, certId) {
 // js/certifications.js
 
 // 5. Asignar el Event Listener al botón
-document.addEventListener('DOMContentLoaded', () => {
-    const btnPayNode = document.getElementById('btn-pay-node');
+document.addEventListener("DOMContentLoaded", () => {
+  const btnPayNode = document.getElementById("btn-pay-node");
 
-    if (btnPayNode) {
-        btnPayNode.addEventListener('click', () => {
-            // El costo es $89 USD para la certificación Node.js
-            const costoNode = 89; 
-            realizarPagoSimulado('node-js', costoNode);
-        });
-    }
+  if (btnPayNode) {
+    btnPayNode.addEventListener("click", () => {
+      // El costo es $89 USD para la certificación Node.js
+      const costoNode = 89;
+      realizarPagoSimulado("node-js", costoNode);
+    });
+  }
 
-    // Opcional: Manejar el botón de iniciar examen para el siguiente punto (Punto 3)
-    const btnStartNode = document.getElementById('btn-start-node');
-    if (btnStartNode) {
-        btnStartNode.addEventListener('click', () => {
-            // Lógica para redirigir a examen.html (Punto 3 del plan)
-            console.log('Iniciando examen Node.js...');
-            // window.location.href = 'examen.html?cert=node-js';
-        });
-    }
+  // Opcional: Manejar el botón de iniciar examen para el siguiente punto (Punto 3)
+  const btnStartNode = document.getElementById("btn-start-node");
+  if (btnStartNode) {
+    btnStartNode.addEventListener("click", () => {
+      // Lógica para redirigir a examen.html (Punto 3 del plan)
+      console.log("Iniciando examen Node.js...");
+      // window.location.href = 'examen.html?cert=node-js';
+    });
+  }
 
-    // Opcional: Cargar estado de pago al cargar la página (para persistencia)
-    if (localStorage.getItem('pago_node-js_status') === 'paid') {
-        const btnPagar = document.getElementById('btn-pay-node');
-        const btnIniciar = document.getElementById('btn-start-node');
-        if(btnPagar && btnIniciar){
-             btnPagar.disabled = true;
-             btnPagar.textContent = 'Pago Registrado';
-             btnIniciar.disabled = false;
-        }
+  // Opcional: Cargar estado de pago al cargar la página (para persistencia)
+  if (localStorage.getItem("pago_node-js_status") === "paid") {
+    const btnPagar = document.getElementById("btn-pay-node");
+    const btnIniciar = document.getElementById("btn-start-node");
+    if (btnPagar && btnIniciar) {
+      btnPagar.disabled = true;
+      btnPagar.textContent = "Pago Registrado";
+      btnIniciar.disabled = false;
     }
+  }
 });
-
