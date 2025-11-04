@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 // Almacén de sesiones activas en memoria
 // Guarda: { token => { userId: string } }
->>>>>>> yaelBranch
+
 const sessions = new Map();
 
 /**
