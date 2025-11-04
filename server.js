@@ -3,14 +3,14 @@ const authRoutes = require("./Backend/routes/auth.routes");
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const examsRoutes = require("./Backend/routes/exams.routes");
 
 // Middlewares mínimos
 app.use(express.json());
 
 const ALLOWED_ORIGINS = [
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
+    'http://localhost:5501',
+    'http://127.0.0.1:5501',
 ];
 
 app.use(cors({ 
@@ -31,8 +31,11 @@ optionsSuccessStatus: 200
 }));
 
 
-// Montar rutas bajo /api
+// Montar rutas bajo /labs
 app.use("/api", authRoutes);
+
+// Rutas Protegidas (requieren token)
+app.use('/api/exams', examsRoutes);
 
 // (Opcional) Ruta de salud
 app.get("/health", (_req, res) => res.json({ ok: true }));
