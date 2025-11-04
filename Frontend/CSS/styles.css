@@ -371,62 +371,128 @@ h2 {
        pero se mantiene la apariencia estética. */
 }
 
-#contact-form {
-    display: grid;
-    gap: 10px; /* Espacio entre los grupos de formulario */
-    text-align: center;
+
+
+
+/* --- Contenedor Principal (Tarjeta Grande) --- */
+.page-content {
+    max-width: 700px; /* Un poco más angosto para el formulario */
+    margin: 60px auto; /* Más margen arriba y abajo */
+    padding: 40px;
+    background-color: var(--card-bg-main);
+    border-radius: 15px; /* Bordes más redondeados */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); /* Sombra más pronunciada */
+    border: 1px solid var(--border-color);
+    text-align: center; /* Centra el contenido principal */
 }
 
-.form-group {
+/* --- Encabezado del Formulario --- */
+.page-content h2 {
+    font-size: 3rem; /* Título más grande */
+    margin-bottom: 15px;
+    color: black;
+    border-bottom: 5px solid var(--accent-color); /* Borde más grueso */
+    padding-bottom: 15px;
+    display: inline-block;
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+.page-content p {
+    font-size: 1.15rem;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Estructura del Formulario --- */
+#contact-form {
     display: flex;
     flex-direction: column;
+    gap: 25px; /* Más espacio entre las "tarjetitas" de los campos */
 }
 
+/* --- Cada Campo del Formulario (La "Tarjetita" individual) --- */
+.form-group {
+    background-color: var(--form-group-bg); /* Fondo más claro que el principal */
+    border-radius: 10px;
+    padding: 25px; /* Más padding interno */
+    text-align: left; /* Contenido interno alineado a la izquierda */
+    border: 1px solid #3a3a3a; /* Borde más suave */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Sombra para el efecto de elevación */
+
+    /* Transición sutil al pasar el mouse */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group:hover {
+    transform: translateY(-5px); /* Pequeño "lift" */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra un poco más grande */
+}
+
+/* --- Etiquetas (Labels) --- */
 .form-group label {
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #555;
+    font-size: 1.1rem; /* Etiquetas más grandes */
+    color: var(--accent-color); /* Color de acento para la etiqueta */
+    margin-bottom: 10px;
+    font-weight: 600; /* Más negrita */
+    display: block; /* Para que ocupen su propia línea */
 }
 
+/* --- Campos de Entrada (Inputs y Textarea) --- */
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group textarea {
+    background-color: var(--input-bg); /* Fondo más oscuro que la tarjeta */
+    color: #ffffff;
+    border: 1px solid #555; /* Borde más definido */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
     
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1em;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group input:focus,
+/* --- Efecto de Foco (Focus) --- */
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
 .form-group textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
     outline: none;
+    border-color: var(--accent-hover);
+    box-shadow: 0 0 15px rgba(149, 117, 205, 0.4); /* Sombra exterior vibrante */
 }
 
 .form-group textarea {
-    resize: vertical; /* Permite redimensionar verticalmente */
-    min-height: 50px;
+    resize: vertical;
+    min-height: 150px; /* Un poco más alto por defecto */
 }
 
+/* --- Botón de Envío --- */
 #contact-form button[type="submit"] {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
+    background-color: #0099ff;
+    color: black;
+    font-size: 1.2rem; /* Botón más grande */
     font-weight: bold;
-    transition: background-color 0.3s;
-    width: 100%; /* El botón ocupa todo el ancho */
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    padding: 18px 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+    
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
+/* --- Efecto Hover del Botón --- */
 #contact-form button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: var(--accent-hover);
+    transform: translateY(-3px); /* Mayor "lift" */
+    box-shadow: 0 6px 20px rgba(126, 87, 194, 0.5); /* Sombra más fuerte */
 }
 
 /* --- Pie de Página (Básico) --- */
@@ -437,39 +503,91 @@ h2 {
     padding: 15px;
     margin-top: 40px; /* Separación del contenido */
 }
-
-.page-content {
-    max-width: 800px; /* Limita el ancho para que no ocupe toda la pantalla */
-    margin: 40px auto; /* ¡Esta es la clave para centrar! */
-    padding: 30px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+.page-content1 {
+    max-width: 1000px;
+    margin: 40px auto; /* Centrado y con espacio */
+    padding: 40px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
 }
 
-.page-content1 {
-   
-    margin: 40px auto; /* ¡Esta es la clave para centrar! */
-    padding: 30px;
-    background-color: white;
+/* --- Sección "Acerca de" --- */
+.about-us-section {
+    text-align: center; /* Centra el H2 */
+}
+
+.about-us-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    /* Borde inferior sutil con el color de acento */
+    border-bottom: 4px solid var(--accent-color);
+    padding-bottom: 10px;
+    display: inline-block; /* Para que el borde solo ocupe el texto */
+}
+
+/* Párrafo de introducción */
+.about-us-section > p {
+    font-size: 1.15rem;
+    color: #000000; /* Un gris un poco más claro para destacar */
+    margin-bottom: 50px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Tarjetas de Misión, Visión y Valores --- */
+.mission-vision-values {
+    background-color: var(--card-bg-light);
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+    /* Borde de acento a la izquierda */
+    border-left: 5px solid var(--accent-color);
+    text-align: left; /* Devolvemos el texto a la izquierda */
+    
+    /* Efecto "lift" al pasar el mouse */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mission-vision-values:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
 .mission-vision-values h3 {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-    color: var(--color-secondary);
-    font-size: 20px;
+    font-size: 2rem;
+    color: var(--accent-color); /* Título de la tarjeta con acento */
+    margin-top: 0;
+    margin-bottom: 15px;
 }
 
-.mission-vision-values{
-    display: flex;
-    flex-direction: column;
-    
+.mission-vision-values p {
+    font-size: 1.05rem;
 }
 
+/* --- Lista de Valores Personalizada --- */
+.mission-vision-values ul {
+    list-style-type: none; /* Quitamos las viñetas feas */
+    padding-left: 0;
+}
 
+.mission-vision-values li {
+    position: relative;
+    padding-left: 35px; /* Espacio para el ícono */
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+}
 
+/* Creamos una viñeta personalizada (check mark) */
+.mission-vision-values li::before {
+    content: '✓'; /* Puedes cambiarlo por '▶' o '»' */
+    position: absolute;
+    left: 0;
+    top: 0px;
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 1;
+}
