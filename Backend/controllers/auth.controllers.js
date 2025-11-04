@@ -1,18 +1,11 @@
 const users = require("../data/users.json"); // NOTA: Si usaste un .json, cambia a .js (como en la respuesta anterior)
 const { createSession, deleteSession } = require("../middleware/auth.middleware");
 
-<<<<<<< Updated upstream
-/**
- * Maneja la lógica de Login.
- * Valida credenciales, genera un token y devuelve los datos del usuario.
- */
-=======
 // Almacenamiento en memoria
 const attempts = new Map(); // userId -> { questions, answers, passed, score }
 const payments = new Map(); // userId -> { certId, paid: true }
 
 // ============= LOGIN =============
->>>>>>> Stashed changes
 exports.login = (req, res) => {
     console.log("Entro a login");
     // Extrae 'cuenta' y 'password' del body de la petición
@@ -37,12 +30,8 @@ exports.login = (req, res) => {
         return res.status(401).json({ error: "Credenciales inválidas." });
     }
 
-<<<<<<< Updated upstream
-    // 4. Login exitoso: generar token de sesión
-    const token = createSession(match.id); // Usamos 'id' como userId para ser más seguro
-=======
+
     const token = createSession(match.cuenta);
->>>>>>> Stashed changes
 
     console.log(`[LOGIN] Usuario: ${match.cuenta} | Token: ${token} | Procede el login`);
 
@@ -57,8 +46,7 @@ exports.login = (req, res) => {
         } 
     });
 };
-<<<<<<< Updated upstream
-=======
+
 
 // ============= LOGOUT =============
 exports.logout = (req, res) => {
@@ -434,4 +422,4 @@ exports.downloadCertificate = (req, res) => {
 
     console.log(`[PDF] Certificado generado exitosamente para ${userId}`);
 };
->>>>>>> Stashed changes
+
