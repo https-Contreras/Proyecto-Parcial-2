@@ -37,9 +37,9 @@ function showAlert(title, text, icon) {
 function updateAuthUI() {
     const token = localStorage.getItem('token');
     const userAccount = localStorage.getItem('userAccount'); 
-
+    const nombre = localStorage.getItem('userName');
     if (token && userAccount) {
-        userDisplay.textContent = `Hola, ${userAccount}`; 
+        userDisplay.textContent = `Hola, ${nombre}`; 
         userDisplay.style.display = 'inline';
         authButton.textContent = 'Logout';
         authButton.classList.add('logout');
