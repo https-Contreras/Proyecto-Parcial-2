@@ -27,7 +27,7 @@ exports.createSession = (userId) => {
     
     sessions.set(token, sessionData);
     
-    console.log(`[SESSION] Sesión creada para ${userId}. Total: ${sessions.size}`);
+    console.log(`[SESSION] Sesión creada para ${userId}.`);
     return token;
 };
 
@@ -40,7 +40,7 @@ exports.deleteSession = (token) => {
     if (sessions.has(token)) {
         const sessionData = sessions.get(token);
         sessions.delete(token);
-        console.log(`[SESSION] Sesión eliminada para ${sessionData.userId}. Total: ${sessions.size}`);
+        
         return true;
     }
     return false;

@@ -2,7 +2,7 @@
 const modal = document.getElementById('login-modal');
 const authButton = document.getElementById('auth-button');
 const userDisplay = document.getElementById('user-account-display');
-const loginForm = document.getElementById('login-form');
+
 
 const API_BASE_URL = "http://localhost:3000/api";
 
@@ -50,22 +50,41 @@ function updateAuthUI() {
     }
 }
 
-/** Maneja la lógica de cerrar sesión */
-function handleLogout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userAccount');
-    
-    updateAuthUI();
-    showAlert("¡Adiós!", "Has cerrado la sesión con éxito.", "success");
-    
-    // Recargar certificaciones si estamos en esa página
-    if (window.location.pathname.includes('certificaciones.html')) {
-        loadCertifications();
+
+/* Maneja la lógica de cerrar sesión */
+
+async function handleLogout() {
+    const token = localStorage.getItem('token');
+
+    try {
+        if (token) {
+            // 1. Notificar al backend que cierre la sesión (ruta protegida)
+            await fetch(`${API_BASE_URL}/logout`, {
+                method: 'POST',
+                headers: {
+                    // 2. ENVIAR EL TOKEN para que authRequired lo valide
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+        }
+    } catch (error) {
+        // No importa si el backend falla, el front DEBE cerrar sesión
+        console.warn("Error al notificar al backend sobre el logout:", error);
+    } finally {
+        // 3. (MUY IMPORTANTE) Limpiar el frontend SIEMPRE
+        localStorage.removeItem('token');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userAccount');
+        
+        // 4. Actualizar la interfaz
+        updateAuthUI();
+        
+        // 5. Mostrar alerta de éxito
+        showAlert("¡Adiós!", "Has cerrado la sesión con éxito.", "success");
     }
 }
 
-/** Maneja el envío del formulario de Login */
+
 async function handleLoginSubmit(e) {
     e.preventDefault();
     
@@ -320,9 +339,9 @@ document.addEventListener('DOMContentLoaded', () => {
     authButton.addEventListener("click", () => {
         const token = localStorage.getItem('token');
         if (token) {
-            handleLogout();
+            handleLogout(); // Llamar a la función de logout
         } else {
-            openLoginModal();
+            openLoginModal(); // Llamar a la función de login
         }
     });
 
