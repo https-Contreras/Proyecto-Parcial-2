@@ -87,7 +87,7 @@ async function handleLoginSubmit(e) {
             console.warn("Respuesta no JSON del servidor. Posible error interno o 401 sin cuerpo.", parseErr);
             data = {};
         }
-        console.log(data);
+        
         if (response.ok) {
             // Acceso permitido
             localStorage.setItem('token', data.token);

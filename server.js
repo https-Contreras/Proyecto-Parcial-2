@@ -36,7 +36,7 @@ app.use("/api", authRoutes);
 
 // Rutas Protegidas (requieren token)
 app.use('/api/exams', examsRoutes);
-
+//app.use("api/exams/payment",);
 // (Opcional) Ruta de salud
 app.get("/health", (_req, res) => res.json({ ok: true }));
 

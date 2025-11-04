@@ -6,11 +6,6 @@ const router = express.Router();
 const { authRequired } = require('../middleware/auth.middleware');
 const authExams = require("../controllers/exams.controllers");
 
-// 2. Importar el controlador que tienes en pantalla
-// (Asegúrate de que la ruta a tu controlador sea correcta)
-//const examsController = require('../controllers/exams.controller');
-
-// --- Definición de Rutas Protegidas ---
 // Todas las rutas aquí requieren un token válido.
 
 /**

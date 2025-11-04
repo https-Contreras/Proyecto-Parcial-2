@@ -1,45 +1,59 @@
+const crypto = require('crypto');
+
+// 1. Almacén de sesiones activas en memoria
+// ¡CAMBIO IMPORTANTE!
+// Ahora guardamos un OBJETO en lugar de solo el userId.
+// Guarda: { token => { userId: string, hasPaid: boolean } }
 const sessions = new Map();
 
+/**
+ * Crea un nuevo token de sesión único y lo asocia con el userId.
+ * @param {string} userId - El ID único del usuario (ej: 'u001').
+ * @returns {string} El token de sesión generado.
+ */
 exports.createSession = (userId) => {
-    const crypto = require('crypto');
-    const token = (typeof crypto.randomUUID === 'function')
-        ? crypto.randomUUID()
-        : crypto.randomBytes(32).toString('hex');
-    sessions.set(token, userId);
+    const token = crypto.randomUUID();
+    
+    // ¡CAMBIO IMPORTANTE!
+    // Guardamos el objeto de sesión completo.
+    const sessionData = {
+        userId: userId,
+        hasPaid: false // El pago se inicializa en falso
+    };
+    
+    sessions.set(token, sessionData);
+    
+    console.log(`[SESSION] Sesión creada para ${userId}. Total: ${sessions.size}`);
     return token;
 };
 
 
 exports.authRequired = (req, res, next) => {
-    // 1. Obtener el token del header (ej: "Bearer <token>")
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-        // No se proporcionó el header
         return res.status(401).json({ error: "Acceso no autorizado. Falta token." });
     }
 
-    // 2. Separar "Bearer" del token
-    const parts = authHeader.split(' '); // Separa ["Bearer", "<token>"]
+    const parts = authHeader.split(' ');
     
     if (parts.length !== 2 || parts[0] !== 'Bearer') {
-        // El formato del header es incorrecto
         return res.status(401).json({ error: "Token malformado. Debe ser 'Bearer <token>'." });
     }
 
-    const token = parts[1]; // Este es el token puro
+    const token = parts[1];
 
-    // 3. Validar el token en nuestro almacén de sesiones
     if (!sessions.has(token)) {
-        // El token no existe en nuestras sesiones activas
         return res.status(401).json({ error: "Token inválido o sesión expirada." });
     }
 
-    // 4. ¡Acceso Permitido! Adjuntar el userId a la solicitud
-    const userId = sessions.get(token);
-    req.userId = userId; // <-- ¡MUY IMPORTANTE!
+    // ¡CAMBIO IMPORTANTE!
+    // Obtenemos el objeto de sesión completo
+    const sessionData = sessions.get(token);
 
-    // 5. Continuar al siguiente middleware o al controlador
+    // Adjuntamos los datos a la solicitud (req) para que los controladores los usen
+    req.userId = sessionData.userId;     // Para mantener la compatibilidad
+    req.sessionData = sessionData; // Adjuntamos la sesión completa (incluye hasPaid)
+
     next(); 
 };
-
